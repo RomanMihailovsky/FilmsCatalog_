@@ -1,0 +1,63 @@
+﻿
+@model FilmsCatalog.ViewModels.FilmViewModel
+
+<a href="/Home/Index?page=@Model.Page"> < Вернуться </a>
+
+<h4>@(Model.Mode == Mode.View ? "О фильме" : Model.Mode == Mode.Add ? "Добавление фильма" : "Редактирование фильма")</h4>
+
+<form asp-action="DetailFilm" asp-controller="Home" enctype="multipart/form-data" method="post">
+
+    <input name="Film.Id" value="@Model.Film.Id" hidden />
+    <input name="Film.UserName" value="@Model.Film.UserName" hidden />
+
+    <input name="Mode" value="@Model.Mode" hidden />
+    <input name="Page" value="@Model.Page" hidden />
+
+    <table class="table-borderless">
+
+        <tr>
+            <td>Название</td>
+            <td> <input name="Film.Name" value="@Model.Film.Name" @(Model.Mode == Mode.View ? "disabled" : "") />  </td>
+         </tr>
+
+        <tr>
+            <td>Год</td>
+            <td> <input name="Film.Year" value="@Model.Film.Year" @(Model.Mode == Mode.View ? "disabled" : "") />  </td>
+        </tr>
+
+        <tr>
+            <td>Режиссер</td>
+            <td> <input name="Film.Producer" value="@Model.Film.Producer" @(Model.Mode == Mode.View ? "disabled" : "") /> </td>
+        </tr>
+
+        <tr>
+            <td>Описание</td>
+            <td> <input name="Film.Desc" value="@Model.Film.Desc" @(Model.Mode == Mode.View ? "disabled" : "") /> </td>
+        </tr>
+
+        <tr>
+            <td>Пользователь</td>
+            <td> <input name="Film.UserName" value="@Model.Film.UserName" disabled /> </td>
+        </tr>
+
+        <tr>
+            <td>Поcтер</td>
+            <td> <input name="PosterFile" value="@Model.PosterFile" type="file" class="form-control" @(Model.Mode == Mode.View ? "disabled" : "") /> </td>
+        </tr>
+
+    </table>
+
+    <div>
+        @if (Model.Film.Poster != null)
+        {
+            <img style='width:220px; height:180px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Film.Poster))" />
+        }
+    </div>
+
+
+    @if (Model.Mode != Mode.View)
+    {
+        <button type="submit" class="btn btn-info m-1">Сохранить</button>
+    }
+
+</form>
