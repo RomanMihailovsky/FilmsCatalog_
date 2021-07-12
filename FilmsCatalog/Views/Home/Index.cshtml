@@ -1,8 +1,91 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@model FilmsCatalog.ViewModels.FilmsViewModel
+
+<div>
+
+    <h4>Каталог фильмов</h4>
+
+    <a href="/Home/DetailFilm/?id=0&mode=@Mode.Add&page=@Model.PageViewModel.PageNumber"> 
+        <input type="button" value="Добавить фильм" class="btn btn-dark" />
+    </a>
+
+    <table class="table table-hover">
+
+        <thead class="badge-secondary">
+
+            <tr>
+                <th><img src="~/Images/contextmenu2.png"></th>
+                <th>Наименование</th>
+                <th>Год выпуска</th>
+                <th>Режиссер</th>
+                <th>Пользователь</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model.Films)
+            {
+                <tr>
+
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle"
+                                    type="button" id="dropdownMenu1" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                <img src="~/Images/list.png">
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <a class="dropdown-item" href="/Home/DetailFilm/?id=@item.Id&mode=@Mode.View&page=@Model.PageViewModel.PageNumber">Просмотр</a>
+                                <a class="dropdown-item" href="/Home/DetailFilm/?id=0&mode=@Mode.Add&page=@Model.PageViewModel.PageNumber">Добавление</a>
+                                <a class="dropdown-item" href="/Home/DetailFilm/?id=@item.Id&mode=@Mode.Edit&page=@Model.PageViewModel.PageNumber">Редактирование</a>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        @item.Name
+                    </td>
+
+                    <td>
+                        @item.Year
+                    </td>
+
+                    <td>
+                        @item.Producer
+                    </td>
+
+                    <td>
+                        @item.UserName
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
 </div>
+
+@*<page-link page-model="@Model.PageViewModel" page-action="Index"></page-link>*@
+
+
+@if (Model.PageViewModel.HasPreviousPage)
+{
+    <a asp-action="Index" asp-route-page="@(Model.PageViewModel.PageNumber - 1)" class="btn btn-outline-dark"> 
+        Назад  
+    </a>
+}
+
+@if (Model.PageViewModel.HasNextPage)
+{
+    <a asp-action="Index" asp-route-page="@(Model.PageViewModel.PageNumber + 1)" class="btn btn-outline-dark">
+        Вперед
+    </a>
+}
+

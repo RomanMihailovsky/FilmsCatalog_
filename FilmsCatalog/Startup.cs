@@ -29,7 +29,11 @@ namespace FilmsCatalog
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+            
+            services.AddDbContext<FilmsDbContext>(options => options.UseSqlServer(connectionString));
+            
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
