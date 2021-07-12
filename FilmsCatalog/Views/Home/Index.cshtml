@@ -8,7 +8,7 @@
 
     <h4>Каталог фильмов</h4>
 
-    <a href="/Home/DetailFilm/?id=0&mode=@Mode.Add&page=@Model.PageViewModel.PageNumber"> 
+    <a href="/Home/DetailFilm/?id=0&mode=@Mode.Add&page=@Model.PageViewModel.PageNumber">
         <input type="button" value="Добавить фильм" class="btn btn-dark" />
     </a>
 
@@ -72,13 +72,11 @@
 
 </div>
 
-@*<page-link page-model="@Model.PageViewModel" page-action="Index"></page-link>*@
-
 
 @if (Model.PageViewModel.HasPreviousPage)
 {
-    <a asp-action="Index" asp-route-page="@(Model.PageViewModel.PageNumber - 1)" class="btn btn-outline-dark"> 
-        Назад  
+    <a asp-action="Index" asp-route-page="@(Model.PageViewModel.PageNumber - 1)" class="btn btn-outline-dark">
+        Назад
     </a>
 }
 
